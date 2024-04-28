@@ -44,7 +44,24 @@ limit 5;
 
 -- 23 BETWEEN is inclusive on both sides
 -- for exlusive - use x>low AND x<high
--- BETWEEN can be used with dates (they should be in ISO 8601 format
--- which is YYYY-MM-DD)
+-- BETWEEN can be used with dates
+-- they should be in ISO 8601 format which is YYYY-MM-DD
+select * from payment where payment_date between '2007-02-13' and '2007-02-15';
+
+-- 24 IN -- rating is G or R
+select * from film where rating in ('G', 'R');
+
+-- 25 LIKE (case-sens) and ILIKE (case-insens)
+-- % is a wildcard character, _ is for 1 symbol
+-- get all customers whose name ends with 'a'
+select * from customer where first_name like '%a';
+select * from customer where first_name like '_ar%a' ; -- "Barbara" "Maria" "Martha" "Sara" "Carla" "Tara" "Marcia"
+-- postgres supports regex!
+
+-- 26 how many distinct districts are customers from
+select count(distinct(district)) from address;
+
+
+
 
 ```
