@@ -61,6 +61,9 @@ select * from customer where first_name like '_ar%a' ; -- "Barbara" "Maria" "Mar
 -- 26 how many distinct districts are customers from
 select count(distinct(district)) from address;
 
+-- 28 aggregates - only in select and having clauses
+select  min(replacement_cost), max(replacement_cost) from film;
+select  round(avg(replacement_cost), 2) from film;
 
 
 
