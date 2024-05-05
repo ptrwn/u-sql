@@ -112,5 +112,40 @@ where company != 'Google'
 group by company
 having sum(sales) > 1000;
 
+select customer_id, sum(amount) from payment
+where customer_id not in (184, 87, 477)  -- it's ok to put customer_id into where, because we do not aggregate by it
+group by customer_id
+having sum(amount) > 170  -- we aggregate - sum - by amount, so it goes to having
+order by sum(amount) desc;
+
+
+select customer_id, count(payment_id) from payment
+group by customer_id
+having count(payment_id) >= 40;
+
+select sum(amount), customer_id from payment
+where staff_id = 2
+group by customer_id
+having sum(amount) > 100;
+
+select sum(amount), customer_id from payment
+where staff_id = 2
+group by customer_id
+having sum(amount) > 100;
+
+-- 35 
+select sum(amount), customer_id from payment
+where staff_id = 2
+group by customer_id
+having sum(amount) >= 110
+
+select count(*) from film where title like 'J%'
+
+select * from customer
+where first_name like 'E%'
+and address_id < 500
+order by customer_id desc;
+
+
 
 ```
