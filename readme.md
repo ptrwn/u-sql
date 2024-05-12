@@ -146,6 +146,58 @@ where first_name like 'E%'
 and address_id < 500
 order by customer_id desc;
 
+-- 39 AS is for aliasing
+select first_name as fname from customer;
+
+-- the AS operator is executed in the end of the query,
+-- so we cannot use alias inside where operator
+
+select customer_id, sum(amount) as total_spent from payment
+group by customer_id
+having sum(amount) > 100;  -- this is OK
+
+-- this does not work:
+select customer_id, sum(amount) as total_spent from payment
+group by customer_id
+having total_spent > 100;  -- NONONO! 
+-- ERROR:  column "total_spent" does not exist
+-- LINE 7: having total_spent > 100;
+--                ^ 
+
+-- SQL state: 42703
+-- Character: 206
+
+select * from payment
+inner join customer
+on payment.customer_id = customer.customer_id
+
+select payment_id, payment.customer_id, first_name, last_name
+from payment inner join customer
+on payment.customer_id = customer.customer_id
+
+-- full outer join with WHERE
+-- to get rows unique to either table
+-- opposite to INNER join
+
+SELECT * FROM tableA FULL OUTER JOIN tableB
+on tableA.col_match = tableB.col_match
+WHERE tableA.id IS null OR tableB.id IS null 
+
+-- to get payments that are not attached to customers
+-- and customer who are not attached to any payments
+-- "we only have info on customers who paid"
+SELECT * FROM payment FULL OUTER JOIN customer
+on payment.customer_id = customer.customer_id
+WHERE customer.customer_id IS null OR payment.payment_id IS null 
+
+select count(distinct customer_id) from customer -- /payment
+
+-- 42 -- left outer join
+select film.film_id, title, inventory_id, store_id
+from film
+left join inventory
+on inventory.film_id = film.film_id
+where inventory.film_id is null -- check only for films that are not in inventory
 
 
 ```
