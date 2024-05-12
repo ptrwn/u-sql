@@ -199,5 +199,33 @@ left join inventory
 on inventory.film_id = film.film_id
 where inventory.film_id is null -- check only for films that are not in inventory
 
+-- 43 -- right joins
+-- same as left joins, but tables are flipped 
+
+-- 44 -- union
+-- concatenates results of two SELECTs together
+-- pastes one on top of the other
+
+-- 45 -- join challenges
+-- what are emails of customers who live in CA
+
+select district, email from customer
+inner join address
+on customer.address_id = address.address_id
+where district = 'California'
+
+-- what movies a specific actor is in
+select film.title from film
+inner join film_actor on 
+film.film_id = film_actor.film_id
+inner join actor on 
+film_actor.actor_id = actor.actor_id
+where actor.first_name = 'Nick' 
+and 
+actor.last_name = 'Wahlberg'
+
+
+
+
 
 ```
