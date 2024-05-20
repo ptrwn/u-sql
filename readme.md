@@ -232,7 +232,70 @@ SELECT NOW(); -- show current time - timestamp
 SELECT CURRENT_TIME / CURRENT_DATE -- specific part of timestamp
 SELECT TIMEOFDAY(); -- show curr time as string, more human-readable
 
+-- 48 timestamps and extract
+-- extract day/week/month/year/quarter:
+select extract(quarter from payment_date) as my_q from payment;
+select payment_date, extract(quarter from payment_date) as my_q from payment;
 
+-- how long ago was a particular timestamp
+select age(payment_date) from payment;
+-- "17 years 3 mons 4 days 01:34:13.003423"
+-- "17 years 3 mons 04:20:03.003423"
+
+select to_char(payment_date, 'mm-yyyy-dd') from payment;
+-- results will be text, not timestamp, and formatted as specified
+-- check psql doc for date formatting strings
+-- https://www.postgresql.org/docs/12/functions-formatting.html
+
+-- 50 - timestamps and extract
+select distinct to_char(payment_date, 'Month') from payment;
+-- how many payments occurred on a Monday:
+select count(*) from payment where extract(dow from payment_date) = 1;
+-- https://www.postgresql.org/docs/8.1/functions-datetime.html#FUNCTIONS-DATETIME-EXTRACT
+
+-- 51 - math functions and operations
+select round(rental_rate/replacement_cost,2)*100 as percent_cost from film;
+
+-- 52 - str functions and operators
+select length(last_name) from customer;
+-- || is string concatenation
+select upper(first_name)||' '||last_name from customer
+select lower(left(first_name,1))||lower(last_name)||'@gmail.com' from customer
+
+-- 53 - SubQuery
+-- a query that uses results of another query
+select title, release_year, rental_rate from film
+where rental_rate > 
+(select avg(rental_rate) from film); -- sub-q runs first! then the rest of main q
+
+select film_id, title 
+from film
+where film_id in 
+(select inventory.film_id from rental
+inner join inventory on inventory.inventory_id = rental.inventory_id
+where return_date between '2005-05-29' and '2005-05-30');
+
+select first_name, last_name 
+from customer as c
+where exists
+(select * from payment as p 
+where p.customer_id = c.customer_id
+and amount > 11);
+
+-- 54 - self-join - a table is joined to itself
+-- useful for comparing values in a column of rows within the same table
+-- ~'join two copies of the same table, using alias to avoid name collision'
+select emp.col, rep.col
+from employees as emp
+join eployees as rep
+on emp.emp_id = rep.report_id;
+
+-- find all pairs of films that have the same length
+select f1.title, f2.title
+from film as f1
+inner join film as f2 
+on f1.length = f2.length
+and f1.film_id != f2.film_id -- so that a film is not matched with itself!
 
 ```
 
