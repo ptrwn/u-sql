@@ -224,8 +224,15 @@ where actor.first_name = 'Nick'
 and 
 actor.last_name = 'Wahlberg'
 
-
+-- 47
+-- shows runtime parameters
+SHOW ALL;
+SHOW TIMEZONE; -- show current local timezone
+SELECT NOW(); -- show current time - timestamp
+SELECT CURRENT_TIME / CURRENT_DATE -- specific part of timestamp
+SELECT TIMEOFDAY(); -- show curr time as string, more human-readable
 
 
 
 ```
+
