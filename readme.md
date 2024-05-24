@@ -297,5 +297,63 @@ inner join film as f2
 on f1.length = f2.length
 and f1.film_id != f2.film_id -- so that a film is not matched with itself!
 
+-- 57
+-- facilities that charge a fee to members, and that fee is less than 1/50th of 
+-- the monthly maintenance cost? Return the facid, facility name, member cost, 
+-- and monthly maintenance of the facilities in question.
+select facid, name, membercost, monthlymaintenance from cd.facilities
+where membercost > 0 and
+membercost < monthlymaintenance / 50
+
+-- facilities with the word 'Tennis' in their name?
+select facid, name, membercost, monthlymaintenance from cd.facilities
+where name ilike '%tennis%'
+
+-- who joined after X
+select memid, surname, firstname, joindate from cd.members
+where joindate > '2012-09-01 00:00:00'
+
+-- top 10 surnames
+select distinct surname from cd.members
+order by surname
+limit 10
+
+-- the latest signed up member
+select * from cd.members order by joindate desc limit 1
+
+-- total number of slots booked per facility in the month of September 
+-- 2012. Produce an output table consisting of facility id and slots, 
+-- sorted by the number of slots.
+
+select  cd.bookings.facid, sum(cd.bookings.slots), cd.facilities.name   from cd.bookings
+inner join cd.facilities  on
+cd.bookings.facid = cd.facilities.facid
+where starttime > '2012-09-01 00:00:00' and starttime < '2012-09-30 23:59:59'
+group by cd.bookings.facid, cd.facilities.name 
+order by sum(cd.bookings.slots) desc
+
+-- list of facilities with more than 1000 slots booked
+select  cd.bookings.facid, sum(cd.bookings.slots), cd.facilities.name   from cd.bookings
+inner join cd.facilities  on
+cd.bookings.facid = cd.facilities.facid
+-- where starttime > '2012-09-01 00:00:00' and starttime < '2012-09-30 23:59:59'
+group by cd.bookings.facid, cd.facilities.name 
+having sum(cd.bookings.slots) > 1000
+order by sum(cd.bookings.slots) desc
+
+-- list of the start times for bookings for tennis courts, for the date '2012-09-21'
+select  cd.bookings.starttime,  cd.facilities.name   from cd.bookings
+inner join cd.facilities  on
+cd.bookings.facid = cd.facilities.facid
+where starttime > '2012-09-21 00:00:00' and starttime < '2012-09-21 23:59:59'
+and cd.facilities.name like '%Tennis Court%'
+
+select  cd.bookings.starttime,  cd.facilities.name, cd.members.firstname, cd.members.surname from cd.bookings
+inner join cd.facilities  on
+cd.bookings.facid = cd.facilities.facid
+inner join cd.members on 
+cd.bookings.memid = cd.members.memid
+where cd.members.firstname = 'David' and cd.members.surname  = 'Farrell'
+
 ```
 
