@@ -78,6 +78,21 @@ UPDATE account
 SET last_login = created_on
 RETURNING account_id, last_login
 
+update account_job
+set hire_date = account.created_on
+from account
+where account_job.user_id = account.user_id
+
+-- 66 - DELETE
+DELETE FROM table
+WHERE row_id = 1
+
+-- or - delete rows based on their presence in other tables
+DELETE FROM tableA
+USING tableB
+WHERE tableA.id = tableB.id
+
+
 
 
 
