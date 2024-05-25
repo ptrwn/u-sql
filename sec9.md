@@ -92,6 +92,38 @@ DELETE FROM tableA
 USING tableB
 WHERE tableA.id = tableB.id
 
+-- delete all rows
+DELETE FROM table
+
+-- 67 - ALTER clause:
+-- add/drop/rename cols
+-- change cols data type
+-- set default vals to col
+-- add CHECK constraints
+-- rename table
+
+ALTER TABLE table_name some_action
+
+-- add a col
+ALTER TABLE table_name
+ADD COLUMN new_col TYPE 
+-- alter constrains
+ALTER TABLE table_name
+ALTER COLUMN col_name
+SET NOT NULL
+
+ALTER TABLE table_name
+ALTER COLUMN col_name
+DROP NOT NULL
+
+ALTER TABLE info
+RENAME TO new_info
+
+ALTER TABLE new_info
+RENAME COLUMN person TO people
+
+-- 68 DROP table
+
 
 
 
