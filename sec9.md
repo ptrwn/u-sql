@@ -36,10 +36,27 @@ CREATE TABLE account_job(
 	hire_date TIMESTAMP
 )
 
+-- 64 - INSERT
+INSERT INTO account(username, password, email, created_on)
+VALUES
+('Joe', 'pass', 'qwe@qew.com', CURRENT_TIMESTAMP)
 
+INSERT INTO account(username, password, email, created_on)
+VALUES
+('Jill', 'pass1', 'qwe1@qew.com', CURRENT_TIMESTAMP),
+('Jake', 'pass2', 'qwe2@qew.com', CURRENT_TIMESTAMP),
+('Juke', 'pass3', 'qwe3@qew.com', CURRENT_TIMESTAMP)
 
+INSERT INTO job(job_name)
+VALUES
+('Qqweqwe'),
+('Foo'),
+('Barr')
 
-
+SELECT * FROM account inner join account_job 
+on account.user_id = account_job.user_id
+inner join job on
+account_job.job_id = job.job_id
 
 
 ```
