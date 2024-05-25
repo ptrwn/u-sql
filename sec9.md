@@ -58,6 +58,29 @@ on account.user_id = account_job.user_id
 inner join job on
 account_job.job_id = job.job_id
 
+-- 65 - UPDATE
+-- general syntax
+UPDATE table 
+SET col1 = val1, col2 = val2, ...
+WHERE condition -- optional
+
+-- update based on another col in the same table
+UPDATE account
+SET last_login = created_on
+
+-- update and join - using a col from another table
+UPDATE tableA SET orig_col = tableB.new_col
+FROM tableB 
+WHERE tableA.id = tableB.id
+
+-- return affected rows
+UPDATE account
+SET last_login = created_on
+RETURNING account_id, last_login
+
+
+
+
 
 ```
 
