@@ -122,12 +122,20 @@ RENAME TO new_info
 ALTER TABLE new_info
 RENAME COLUMN person TO people
 
--- 68 DROP table
+-- 68 DROP 
+-- removes a column in table, in PostgreSQL also removes indexes
+-- and constraints on this column
+-- BUT -- will not remove cols used in triggers, views or stored procedures
+-- use additional CASCADE clause for that
 
+ALTER TABLE such_table DROP COLUMN col_name CASCADE
 
+ALTER TABLE such_table DROP COLUMN IF EXISTS col_name CASCADE -- to avoid error if col does not exist
 
-
-
+ALTER TABLE such_table -- to drop many cols at once
+DROP COLUMN col_name1,
+DROP COLUMN col_name2,
+DROP COLUMN col_name3
 
 ```
 
