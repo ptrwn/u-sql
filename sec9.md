@@ -137,5 +137,57 @@ DROP COLUMN col_name1,
 DROP COLUMN col_name2,
 DROP COLUMN col_name3
 
+-- 69 CHECK 
+CREATE TABLE example(
+    ex_id SERIAL PRIMARY KEY,
+    age SMALLINT CHECK(age>21),
+    parent_age SMALLINT CHECK(parent_age>age) -- check - compare with other col
+)
+
+CREATE TABLE  employees(
+    emp_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    birthdate DATE CHECK (birthdate > '1900-01-01'),
+    hire_date DATE CHECK (hire_date > birthdate),
+    salary INTEGER CHECK (salary > 0)
+)
+
+INSERT INTO employees(
+    first_name, last_name,birthday,salary)
+VALUES(
+    'Foo', 'Bar', '12-12-1986', '100')
+
+CREATE TABLE teachers(
+	teacher_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+	homeroom_number SMALLINT, 
+	department VARCHAR(50),
+	phone VARCHAR(50) UNIQUE NOT NULL,
+	email VARCHAR(50) UNIQUE
+)
+
+INSERT INTO teachers(
+	first_name, last_name, homeroom_number, department, phone, email)
+VALUES(
+	'Jonas', 'Salk', 5, 'Biology', '777-555-4321', 'jsalk@school.org')
+
+
+CREATE TABLE students(
+	student_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+	homeroom_number SMALLINT, 
+	grad_year SMALLINT,
+	phone VARCHAR(50) UNIQUE NOT NULL,
+	email VARCHAR(50) UNIQUE
+)
+
+INSERT INTO students(
+	first_name, last_name, homeroom_number, grad_year, phone)
+VALUES(
+	'Mark', 'W', 5, 2035, '777-555-1234')
+
 ```
 
